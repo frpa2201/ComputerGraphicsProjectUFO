@@ -36,6 +36,14 @@ void main(){
 }
 </script>
 
+<script type="importmap">
+{
+    "imports": {
+        "gl-matrix": "https://cdn.jsdelivr.net/npm/gl-matrix@3.4.4/+esm"
+    }
+}
+</script>
+
 
 </head>
 
@@ -45,12 +53,18 @@ void main(){
     </canvas>
     <div>
         <button id="reset-view-button">Reset View</button>
-        <button id="test-button">Test</button>
+        <div class="slider-container">
+            <label for="slide">Cubes:</label>
+            <input type="range" id="slide" min="0" max="16" step="1" value="16">
+            <span>16</span>
+        </div>
     </div>
     
     <div id="error-box">
         <span class="error-box-title"></span>
     </div>
+    
     <script type="module" src="src/main.js"></script>
 </body>
+
 </html>
