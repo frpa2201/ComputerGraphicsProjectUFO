@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>LAB2</title>
+
+<!-- The job of the vertex shader is to declare where the processed 
+ vertex show up on the output image in clip space -->
+<script id="vertex-shader" type="x-shader/x-vertex">#version 300 es
+precision mediump float;
+in vec3 vPosition;
+in vec3 vertexColor;
+
+out vec3 fragmentColor;
+
+uniform mat4 matWorld;
+uniform mat4 matView;
+uniform mat4 matProj;
+
+void main(){
+    fragmentColor = vertexColor;
+
+    gl_Position = matProj * matView * matWorld * vec4(vPosition, 1.0);
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">#version 300 es
+precision mediump float;
+
+in vec3 fragmentColor;
+out vec4 outputColor;
+
+void main(){
+    outputColor = vec4(fragmentColor, 1.0);
+}
+</script>
+
+
+</head>
+
+<body>
+    <canvas id="gl-canvas">
+        Oops... browser not support canvas
+    </canvas>
+    <div>
+        <button id="reset-view-button">Reset View</button>
+        
+    </div>
+    
+    <div id="error-box">
+        <span class="error-box-title"></span>
+    </div>
+    
+    <script type="module" src="src/main.js"></script>
+</body>
+
+</html>
