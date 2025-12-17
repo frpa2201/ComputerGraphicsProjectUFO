@@ -12,7 +12,7 @@ let object;
 
 let controls;
 
-let objToRender = 'city';
+let objToRender = 'city2';
 
 const loader = new GLTFLoader();
 
@@ -34,14 +34,14 @@ const renderer = new THREE.WebGLRenderer({alpha: true});
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-camera.position.z = objToRender === 'city' ? 25 : 500;
+camera.position.z = objToRender === 'city2' ? 25 : 500;
 
 const topLight = new THREE.DirectionalLight(0xffffff, 1);
 topLight.position.set(500,500,500);
 topLight.castShadow = true;
 scene.add(topLight);
 
-const ambientLight = new THREE.AmbientLight(0x333333, objToRender === 'city' ? 5 : 1);
+const ambientLight = new THREE.AmbientLight(0x333333, objToRender === 'city2' ? 5 : 1);
 scene.add(ambientLight);
 
 controls = new OrbitControls(camera, renderer.domElement);
