@@ -1,0 +1,11 @@
+Model Information:
+* title:	UFO by Jeroen
+* source:	https://sketchfab.com/3d-models/ufo-by-jeroen-2a3256decde84d9c9aa42704c1293126
+* author:	Jeroen Somers (https://sketchfab.com/somersjeroen)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "UFO by Jeroen" (https://sketchfab.com/3d-models/ufo-by-jeroen-2a3256decde84d9c9aa42704c1293126) by Jeroen Somers (https://sketchfab.com/somersjeroen) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
