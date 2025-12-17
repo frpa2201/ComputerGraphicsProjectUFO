@@ -1,70 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/styles.css">
-    <title>LAB2</title>
+    <head>
+        
+        <meta charset="UTF-8"/>
 
-<!-- The job of the vertex shader is to declare where the processed 
- vertex show up on the output image in clip space -->
-<script id="vertex-shader" type="x-shader/x-vertex">#version 300 es
-precision mediump float;
-in vec3 vPosition;
-in vec3 vertexColor;
-
-out vec3 fragmentColor;
-
-uniform mat4 matWorld;
-uniform mat4 matView;
-uniform mat4 matProj;
-
-void main(){
-    fragmentColor = vertexColor;
-
-    gl_Position = matProj * matView * matWorld * vec4(vPosition, 1.0);
-}
-</script>
-
-<script id="fragment-shader" type="x-shader/x-fragment">#version 300 es
-precision mediump float;
-
-in vec3 fragmentColor;
-out vec4 outputColor;
-
-void main(){
-    outputColor = vec4(fragmentColor, 1.0);
-}
-</script>
-
-<script type="importmap">
+        <script type="importmap">
 {
     "imports": {
-        "gl-matrix": "https://cdn.jsdelivr.net/npm/gl-matrix@3.4.4/+esm"
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/examples/jsm/": "https://unpkg.com/three@0.160.0/examples/jsm/"
     }
 }
-</script>
-
-
-</head>
-
-<body>
-    <canvas id="gl-canvas">
-        Oops... browser not support canvas
-    </canvas>
-    <div>
-        <button id="reset-view-button">Reset View</button>
-        <div class="slider-container">
-            <label for="slide">Cubes:</label>
-            <input type="range" id="slide" min="0" max="16" step="1" value="16">
-            <span>16</span>
-        </div>
-    </div>
-    
-    <div id="error-box">
-        <span class="error-box-title"></span>
-    </div>
-    
-    <script type="module" src="src/main.js"></script>
-</body>
-
+        </script>
+    </head>
+    <body>
+        <script type="module" src="src/main.js"></script>
+    </body>
 </html>
