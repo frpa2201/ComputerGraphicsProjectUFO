@@ -43,12 +43,12 @@ function projectInit(){
         
 
         // temporary ufo spinning logic
-        let ufoCircling = new THREE.Vector3(-10, 80, -270);
+        /*let ufoCircling = new THREE.Vector3(-10, 80, -270);
         let circlesPerSecond = 0.1;
         ufoCircling.x = ufoCircling.x + 40 * Math.cos(2*Math.PI*circlesPerSecond*timeSeconds);
         ufoCircling.z = ufoCircling.z + 40 * Math.sin(2*Math.PI*circlesPerSecond*timeSeconds);
         globals.models.ufo.position.set(ufoCircling.x, 80, ufoCircling.z)
-        
+        */
 
     }
 

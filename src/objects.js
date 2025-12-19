@@ -1,5 +1,5 @@
 import { globals } from "./globals.js"
-
+import { UFOSpotlight } from "./lighting.js";
 export const objects = {
     loadObjects: function(){
         loadCity();
@@ -31,9 +31,15 @@ function loadUfo () {
         function(gltf){
             gltf.scene.scale.set(3,3,3)
             gltf.scene.position.set(-10, 80, -270)
+
             globals.scene.add(gltf.scene);
             globals.models.ufo = gltf.scene;
             
+            const beamGroup = UFOSpotlight();
+            globals.models.ufo.add(beamGroup)
+
+            const beamLight = UFOSpotlight();
+            //globals.models.ufo.add(beamLight.)
         },
         function(xhr){
             console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -62,3 +68,4 @@ function loadCar () {
         }
     );
 }
+
