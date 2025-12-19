@@ -24,6 +24,8 @@ function projectInit(){
     lighting.setUpLighting();
 
     viewing.setUpControls();
+    
+    
 
     document.onmousemove = (e) => {
         mouseX = e.clientX;

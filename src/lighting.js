@@ -13,3 +13,7 @@ export const lighting = {
         globals.scene.add(ambientLight);
     }
 }
+
+function UFOSpotlight () {
+    const UFOBeam = new THREE.SpotLight(0xffffff)
+}

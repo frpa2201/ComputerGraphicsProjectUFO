@@ -8,4 +8,9 @@ export const globals = {
     loader: new GLTFLoader(),
     renderer: new THREE.WebGLRenderer({alpha: true}),
     controls: null,
+    models: {
+        city: null,
+        ufo: null,
+        cars: null,
+    }
 }
