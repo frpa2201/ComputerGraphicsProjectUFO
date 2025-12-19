@@ -1,53 +1,29 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { globals } from './globals.js';
+import { objects } from './objects.js';
+import { rendering } from './renderer.js';
+import { viewing } from './viewing.js';
+import { lighting } from './lighting.js';
 
 function projectInit(){
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+    const scene = globals.scene;
+    const camera = globals.camera;
 
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
 
-    let object;
+    objects.loadObjects();
 
-    let controls;
+    const renderer = globals.renderer; 
+    rendering.setUpRenderer();
 
-    let objToRender = 'city';
+    viewing.setUpCamera();
 
-    const loader = new GLTFLoader();
+    lighting.setUpLighting();
 
-    loader.load(
-        `models/${objToRender}/scene.gltf`,
-        function(gltf){
-            object = gltf.scene;
-            scene.add(object);
-        },
-        function(xhr){
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        },
-        function(error){
-            console.log(error);
-        }
-    );
-
-    const renderer = new THREE.WebGLRenderer({alpha: true}); 
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
-
-    camera.position.set(350, 350, -350);
-
-
-    const topLight = new THREE.DirectionalLight(0xffffff, 1);
-    topLight.position.set(500,500,500);
-    topLight.castShadow = true;
-    scene.add(topLight);
-
-
-    const ambientLight = new THREE.AmbientLight(0x333333, 5);
-    scene.add(ambientLight);
-
-    controls = new OrbitControls(camera, renderer.domElement);
+    viewing.setUpControls();
 
     document.onmousemove = (e) => {
         mouseX = e.clientX;
