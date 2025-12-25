@@ -9,8 +9,11 @@ export const globals = {
     renderer: new THREE.WebGLRenderer({alpha: true}),
     controls: null,
     models: {
+        /** @type {THREE.Group<THREE.Object3DEventMap> | null} */
         city: null,
+        /** @type {THREE.Group<THREE.Object3DEventMap> | null} */
         ufo: null,
+        /** @type {THREE.Group<THREE.Object3DEventMap>[] | null} */
         cars: null,
     }
 }
