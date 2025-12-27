@@ -6,6 +6,8 @@ import { objects } from './objects.js';
 import { rendering } from './renderer.js';
 import { viewing } from './viewing.js';
 import { lighting } from './lighting.js';
+import { fog } from './fog.js';
+import { postprocessing } from './postprocessing.js';
 
 function projectInit(){
     const scene = globals.scene;
@@ -25,7 +27,9 @@ function projectInit(){
 
     viewing.setUpControls();
     
-    
+    fog.setUpFog();
+
+    postprocessing.setUpPostProcessing();
 
     document.onmousemove = (e) => {
         mouseX = e.clientX;
@@ -35,11 +39,14 @@ function projectInit(){
     window.onresize = (e) => {
         renderer.setSize( window.innerWidth, window.innerHeight );
         camera.aspect = window.innerWidth / window.innerHeight
+        camera.updateProjectionMatrix();
     }
 
     function animate(time) {
         let timeSeconds = time * 0.001;
-        renderer.render( scene, camera );
+
+        // render scene using composer to be able to use postprocessing features
+        globals.composer.render();  
         
 
         // temporary ufo spinning logic

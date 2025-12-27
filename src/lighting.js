@@ -3,13 +3,13 @@ import { globals } from "./globals.js"
 
 export const lighting = {
     setUpLighting: function(){
-        const topLight = new THREE.DirectionalLight(0xD6DCE3, 0.3);
+        const topLight = new THREE.DirectionalLight(0xD6DCE3, 0.8);
         topLight.position.set(500,500,500);
         topLight.castShadow = true;
         globals.scene.add(topLight);
     
     
-        const ambientLight = new THREE.AmbientLight(0x333333, 2);
+        const ambientLight = new THREE.AmbientLight(0x333333, 1.0);
         globals.scene.add(ambientLight);
     }
 }
