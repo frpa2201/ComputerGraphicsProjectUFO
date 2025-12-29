@@ -58,7 +58,7 @@ function loadCar () {
             gltf.scene.position.set(-10, 12, -270);
             gltf.scene.rotateY(90);
             globals.scene.add(gltf.scene);
-            
+            globals.models.cars = gltf.scene;
         },
         function(xhr){
             console.log((xhr.loaded / xhr.total * 100) + '% loaded');

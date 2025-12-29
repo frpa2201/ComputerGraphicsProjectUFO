@@ -8,6 +8,7 @@ import { viewing } from './viewing.js';
 import { lighting } from './lighting.js';
 import { fog } from './fog.js';
 import { postprocessing } from './postprocessing.js';
+import { animate } from './animation.js'
 
 function projectInit(){
     const scene = globals.scene;
@@ -31,6 +32,12 @@ function projectInit(){
 
     postprocessing.setUpPostProcessing();
 
+    window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+            globals.state.animationTrigger = true;
+        }
+    });
+
     document.onmousemove = (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
@@ -42,28 +49,9 @@ function projectInit(){
         camera.updateProjectionMatrix();
     }
 
-    function animate(time) {
-        let timeSeconds = time * 0.001;
-
-        // render scene using composer to be able to use postprocessing features
-        globals.composer.render();  
-        
-
-        // temporary ufo spinning logic
-        /*let ufoCircling = new THREE.Vector3(-10, 80, -270);
-        let circlesPerSecond = 0.1;
-        ufoCircling.x = ufoCircling.x + 40 * Math.cos(2*Math.PI*circlesPerSecond*timeSeconds);
-        ufoCircling.z = ufoCircling.z + 40 * Math.sin(2*Math.PI*circlesPerSecond*timeSeconds);
-        globals.models.ufo.position.set(ufoCircling.x, 80, ufoCircling.z)
-        */
-
-    }
-
     globals.loader.manager.onLoad = function(){
         renderer.setAnimationLoop( animate );
     }
-    
-
 }
 
 window.onload = projectInit;

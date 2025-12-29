@@ -4,7 +4,7 @@ import { globals } from "./globals.js"
 export const fog = {
     setUpFog: function(){
         //globals.scene.fog = new THREE.Fog(0xffffff, 100, 500)
-        globals.scene.fog = new THREE.FogExp2(0xffffff, 0.02);
+        globals.scene.fog = new THREE.FogExp2(0x636363, 0.02);
         
         THREE.ShaderChunk.fog_fragment = /* glsl */ `
         #ifdef USE_FOG
@@ -12,7 +12,7 @@ export const fog = {
             vec3 fogDirection = normalize(vWorldPosition2 - fogOrigin);
             float fogDepth = distance(vWorldPosition2, fogOrigin);
 
-            float heightFactor = 0.3; // overall thickness
+            float heightFactor = 0.5; // overall thickness
 
             float fogDirY = fogDirection.y;
             if (abs(fogDirY) < 0.0001) { 
