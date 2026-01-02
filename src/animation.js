@@ -36,7 +36,7 @@ function animate(time) {
 
 function animate(time) {
     const timeSeconds = time * 0.001;
-    globals.renderer.render(globals.scene, globals.camera);
+    globals.composer.render();
  
     updateUFOFrame(timeSeconds)
     updateCarFrame(timeSeconds)
