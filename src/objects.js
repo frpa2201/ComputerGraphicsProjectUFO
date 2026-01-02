@@ -30,16 +30,16 @@ function loadUfo () {
         `models/ufo/scene.gltf`,
         function(gltf){
             gltf.scene.scale.set(3,3,3)
-            gltf.scene.position.set(-10, 80, -270)
-
+            //gltf.scene.position.set(-10, 80, -270)
+            gltf.scene.position.set(-300, 150, -270);
+            
             globals.scene.add(gltf.scene);
             globals.models.ufo = gltf.scene;
             
             const beamGroup = UFOSpotlight();
             globals.models.ufo.add(beamGroup)
 
-            const beamLight = UFOSpotlight();
-            //globals.models.ufo.add(beamLight.)
+            globals.ufoBeam = beamGroup;
         },
         function(xhr){
             console.log((xhr.loaded / xhr.total * 100) + '% loaded');

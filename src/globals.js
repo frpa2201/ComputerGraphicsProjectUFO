@@ -21,6 +21,9 @@ export const globals = {
         cars: null,
     },
 
+    /** @type {THREE.Group | null} */
+    ufoBeam: null,
+    
     state: {
         animationTrigger: false
     }
