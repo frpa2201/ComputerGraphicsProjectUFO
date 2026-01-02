@@ -19,6 +19,8 @@ export const globals = {
         ufo: null,
         /** @type {THREE.Group<THREE.Object3DEventMap> | null} */
         cars: null,
+        /** @type {THREE.Group<THREE.Object3DEventMap>[] | null} */
+        simpleCars: null,
     },
 
     /** @type {THREE.Group | null} */

@@ -10,6 +10,9 @@ import { fog } from './fog.js';
 import { postprocessing } from './postprocessing.js';
 import { animate } from './animation.js'
 
+const MAX_WIDTH = 854;
+const MAX_HEIGHT = 480;
+
 function projectInit(){
     const scene = globals.scene;
     const camera = globals.camera;
@@ -43,10 +46,24 @@ function projectInit(){
         mouseY = e.clientY;
     }
 
-    window.onresize = (e) => {
-        renderer.setSize( window.innerWidth, window.innerHeight );
+    function resizeCanvas(width, height){
+        if(width > MAX_WIDTH){
+            width = MAX_WIDTH;
+        }
+        if(height > MAX_HEIGHT){
+            height = MAX_HEIGHT;
+        }
+
+        renderer.setSize( width, height );
         camera.aspect = window.innerWidth / window.innerHeight
         camera.updateProjectionMatrix();
+        renderer.domElement.style.width = "100vw";
+        renderer.domElement.style.height = "100vh";
+    }
+
+    resizeCanvas(window.innerWidth, window.innerHeight);
+    window.onresize = (e) => {
+        resizeCanvas(window.innerWidth, window.innerHeight);
     }
 
     globals.loader.manager.onLoad = function(){
