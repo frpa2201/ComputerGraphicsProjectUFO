@@ -5,11 +5,12 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 
 export const globals = {
     scene: new THREE.Scene(),
-    camera: new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 ),
+    camera: new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.1, 1000 ),
     loader: new GLTFLoader(),
     renderer: new THREE.WebGLRenderer({alpha: true}),
     /** @type {EffectComposer | null} */
     composer: null,
+    /** @type {OrbitControls} */
     controls: null,
     
     models: {
@@ -20,7 +21,11 @@ export const globals = {
         /** @type {THREE.Group<THREE.Object3DEventMap> | null} */
         cars: null,
         /** @type {THREE.Group<THREE.Object3DEventMap>[] | null} */
-        simpleCars: null,
+        movingCars: [],
+    },
+
+    modelClasses: {
+        movingCars: []
     },
 
     /** @type {THREE.Group | null} */

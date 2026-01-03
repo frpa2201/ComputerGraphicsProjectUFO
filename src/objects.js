@@ -1,12 +1,22 @@
 import * as THREE from 'three';
 import { globals } from "./globals.js"
 import { UFOSpotlight } from "./lighting.js";
+import { movingCar } from './movingCar.js';
+import { CombinedPath, CubicBezierPath, LinearPath, StandingStillPath } from './paths.js';
 export const objects = {
     loadObjects: function(){
         loadCity();
         loadUfo();
         loadCar();
-        loadSimpleCars();
+        loadMovingCars();
+    },
+
+    setUpObjects: function(){
+        setUpMovingCars();
+    },
+
+    update: function(timeSeconds){
+        updateMovingCars(timeSeconds);
     }
 }
 
@@ -71,13 +81,12 @@ function loadCar () {
     );
 }
 
-function loadSimpleCars () {
+function loadMovingCars () {
     globals.loader.load(
         `models/car_simple/scene.gltf`,
         function(gltf){
             gltf.scene.scale.set(2,2,2);
             gltf.scene.position.set(-5, 0.3, 0);
-            gltf.scene.rotateY(0);
 
             // --- NEW CODE STARTS HERE ---
 
@@ -128,8 +137,13 @@ function loadSimpleCars () {
 
             // --- NEW CODE ENDS HERE ---
 
-            globals.scene.add(gltf.scene);
-            globals.models.simpleCars = [gltf.scene];
+            const car1 = gltf.scene;
+            const car2 = car1.clone();
+
+            globals.scene.add(car1);
+            globals.scene.add(car2);
+            globals.models.movingCars.push(car1);
+            globals.models.movingCars.push(car2);
         },
         function(xhr){
             console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -138,4 +152,73 @@ function loadSimpleCars () {
             console.log(error);
         }
     );
+}
+
+function setUpMovingCars(){
+
+    const car1points = [
+        new THREE.Vector3(-199.1, 0.3, -43.17),
+        new THREE.Vector3(-199.1, 0.3, -68.8),
+        new THREE.Vector3(-191.0, 0.3, -80.3),
+        new THREE.Vector3(-152.1, 0.3, -80.3)
+    ]
+    const car1path = new CombinedPath();
+    car1path.add(new LinearPath(
+        5,
+        car1points[0],
+        car1points[1],
+        true,
+        true
+    ));
+    car1path.add(new StandingStillPath(
+        1.5,
+        car1points[1]
+    ));
+    car1path.add(new CubicBezierPath(
+        5,
+        car1points[1],
+        new THREE.Vector3(-200, 0.3, -81),
+        new THREE.Vector3(-199, 0.3, -82),
+        car1points[2],
+        true,
+        false
+    ));
+    car1path.add(new LinearPath(
+        6,
+        car1points[2],
+        car1points[3],
+        false,
+        false
+    ))
+
+    const car1 = new movingCar(globals.models.movingCars[0], car1path);
+
+
+    const car2path = new CombinedPath();
+    car2path.add(new LinearPath(
+        30,
+        new THREE.Vector3(-76.1, 0.3, -0.6),
+        new THREE.Vector3(-76.1, 0.3, -444),
+        false,
+        false
+    ));
+
+    const car2 = new movingCar(globals.models.movingCars[1], car2path);
+
+
+    globals.modelClasses.movingCars.push(car1);
+    globals.modelClasses.movingCars.push(car2);
+
+    console.log(globals.models.movingCars)
+}
+
+function updateMovingCars(timeSeconds){
+    globals.modelClasses.movingCars.forEach((movingCar) => {
+
+        if(!movingCar.moving){
+            movingCar.startMoving(timeSeconds);
+        }
+        movingCar.update(timeSeconds);
+
+    })
 }

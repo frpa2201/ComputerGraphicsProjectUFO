@@ -8,7 +8,7 @@ import { viewing } from './viewing.js';
 import { lighting } from './lighting.js';
 import { fog } from './fog.js';
 import { postprocessing } from './postprocessing.js';
-import { animate } from './animation.js'
+import { animation } from './animation.js';
 
 const MAX_WIDTH = 854;
 const MAX_HEIGHT = 480;
@@ -66,7 +66,23 @@ function projectInit(){
         resizeCanvas(window.innerWidth, window.innerHeight);
     }
 
+    function animate(time) {
+        const timeSeconds = time * 0.001;
+        globals.composer.render();
+
+        animation.updateLogic(timeSeconds);
+     
+        objects.update(timeSeconds);
+
+        // displaying camera coordinates
+        const tempdiv = document.getElementById('tempdiv');
+        const cameraPos = globals.camera.position;
+        tempdiv.innerText = cameraPos.x + "\n" + cameraPos.y + "\n" + cameraPos.z + "\n";
+        
+    }
+
     globals.loader.manager.onLoad = function(){
+        objects.setUpObjects();
         renderer.setAnimationLoop( animate );
     }
 }
