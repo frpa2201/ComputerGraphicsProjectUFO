@@ -5,10 +5,9 @@ import { globals } from './globals.js';
 import { objects } from './objects.js';
 import { rendering } from './renderer.js';
 import { viewing } from './viewing.js';
-import { lighting } from './lighting.js';
+import { lighting,windowLights } from './lighting.js';
 import { fog } from './fog.js';
 import { postprocessing } from './postprocessing.js';
-//import { animation } from './animation.js';
 
 const MAX_WIDTH = 854;
 const MAX_HEIGHT = 480;
@@ -28,6 +27,7 @@ function projectInit(){
     viewing.setUpCamera();
 
     lighting.setUpLighting();
+    windowLights();
 
     viewing.setUpControls();
     

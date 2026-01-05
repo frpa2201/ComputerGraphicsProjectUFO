@@ -21,6 +21,58 @@ export const lighting = {
     }
 }
 
+export function windowLights() {
+    //Building 1
+    const positionsB1 = [
+        { x: -277, y: 108, z: -40 },
+        { x: -277, y: 102,  z: -48 },
+        { x: -277, y: 95,  z: -65 }, 
+        { x: -277, y: 89,  z: -43 }, 
+        { x: -277, y: 82,  z: -50 }, 
+        { x: -277, y: 76,  z: -55 }, 
+    ];
+    positionsB1.forEach((pos) => {
+    const light = new THREE.RectAreaLight(0xfffee0, 10, 2, 2);
+        
+        light.position.set(pos.x, pos.y, pos.z);
+        light.lookAt(-500, pos.y, pos.z);
+        
+        globals.scene.add(light);
+    })
+
+    const positionsB2 = [
+        { x: -200, y: 108,  z: -16 },
+        { x: -175, y: 92,  z: -16 }, 
+        { x: -195, y: 82,  z: -16 }, 
+        { x: -180, y: 75, z: -16 },
+        { x: -205, y: 56,  z: -16 }, 
+    ];
+    positionsB2.forEach((pos) => {
+    const light = new THREE.RectAreaLight(0xfffee0, 10, 2, 2);
+        
+        light.position.set(pos.x, pos.y, pos.z);
+        light.lookAt(pos.x, pos.y, 500);
+        
+        globals.scene.add(light);
+    })
+
+    const positionsB3 = [
+        { x: -297, y: 108, z: -75 },
+        { x: -290, y: 102,  z: -75 },
+        { x: -305, y: 95,  z: -75 }, 
+        { x: -282, y: 89,  z: -75 }, 
+        { x: -292, y: 76,  z: -75 }, 
+    ];
+    positionsB3.forEach((pos) => {
+    const light = new THREE.RectAreaLight(0xfffee0, 10, 2, 2);
+        
+        light.position.set(pos.x, pos.y, pos.z);
+        light.lookAt(pos.x, pos.y, 500);
+        
+        globals.scene.add(light);
+    })
+}
+
 export function UFOSpotlight() {
     // 1. Create the Group
     const UFOBeamGroup = new THREE.Group();
