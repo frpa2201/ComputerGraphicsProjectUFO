@@ -25,6 +25,7 @@ export class movingCar {
 
             if(this.timeSpentMoving > this.path.totalDuration){
                 this.moving = false;
+                this.timeSpentMoving = 0;
             }
         }
     }

@@ -43,6 +43,7 @@ export class UFO {
         this.stateTimer = 0; 
         this.beamActive = false; 
         globals.models.cars.position.set(-176, 0, -187)
+        globals.models.cars.visible = true;
     }
 
     // 2. The main update loop acts as a router
