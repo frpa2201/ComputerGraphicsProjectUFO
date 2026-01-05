@@ -28,8 +28,8 @@ function resetAnimation() {
     // Reset Car
     const car = globals.models.cars;
     car.visible = true;
-    car.position.y = 0; // Or original ground height
-    car.rotation.set(0,0,0);
+    car.position.set(-10, 12, -270); 
+    car.rotateY(90);
     CAR_PROPERTIES.abductionSpeed = CAR_PROPERTIES.startingAbductionSpeed;
 
     // Reset Beam
