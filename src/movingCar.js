@@ -8,29 +8,28 @@ export class movingCar {
         /** @type {THREE.Group<THREE.Object3DEventMap>} */
         this.model = model;
         this.moving = false;
-        this.movingStartTime = 0;
+        this.timeSpentMoving = 0;
         /** @type {CombinedPath} */
         this.path = combinedPath;
     }
 
-    update(timeSeconds){
+    update(deltaTime){
         if(this.moving){
-            const timeSpentMoving = timeSeconds - this.movingStartTime;
-            const currentPose = this.path.getPose(timeSpentMoving);
+            this.timeSpentMoving += deltaTime;
+            const currentPose = this.path.getPose(this.timeSpentMoving);
 
             this.model.position.set(currentPose.x, currentPose.y, currentPose.z);
             if(currentPose.quaternion != null){
                 this.model.setRotationFromQuaternion(currentPose.quaternion);
             }
 
-            if(timeSpentMoving > this.path.totalDuration){
+            if(this.timeSpentMoving > this.path.totalDuration){
                 this.moving = false;
             }
         }
     }
 
-    startMoving(timeSeconds){
-        this.movingStartTime = timeSeconds;
+    startMoving(){
         this.moving = true;
     }
 }

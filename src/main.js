@@ -37,7 +37,9 @@ function projectInit(){
 
     window.addEventListener('keydown', (e) => {
         if (e.code === 'Space') {
-            globals.state.animationTrigger = true;
+            if(globals.modelClasses.ufo != null){
+                globals.modelClasses.ufo.startAnimation();
+            }
         }
     });
 
@@ -66,13 +68,16 @@ function projectInit(){
         resizeCanvas(window.innerWidth, window.innerHeight);
     }
 
+    const clock = new THREE.Clock();
+
     function animate(time) {
         const timeSeconds = time * 0.001;
+        const deltaTime = clock.getDelta();
         globals.composer.render();
 
-        animation.updateLogic(timeSeconds);
+        //animation.updateLogic(timeSeconds);
      
-        objects.update(timeSeconds);
+        objects.update(deltaTime);
 
         // displaying camera coordinates
         const tempdiv = document.getElementById('tempdiv');

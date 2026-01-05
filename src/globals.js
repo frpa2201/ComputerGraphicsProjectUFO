@@ -24,7 +24,9 @@ export const globals = {
         movingCars: [],
     },
 
+    // assigned in setUpObjects
     modelClasses: {
+        ufo: null,
         movingCars: []
     },
 

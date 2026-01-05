@@ -3,6 +3,7 @@ import { globals } from "./globals.js"
 import { UFOSpotlight } from "./lighting.js";
 import { movingCar } from './movingCar.js';
 import { CombinedPath, CubicBezierPath, LinearPath, StandingStillPath } from './paths.js';
+import { UFO } from './UFO.js';
 export const objects = {
     loadObjects: function(){
         loadCity();
@@ -13,10 +14,12 @@ export const objects = {
 
     setUpObjects: function(){
         setUpMovingCars();
+        setUpUFO();
     },
 
-    update: function(timeSeconds){
-        updateMovingCars(timeSeconds);
+    update: function(deltaTime){
+        updateMovingCars(deltaTime);
+        updateUFO(deltaTime);
     }
 }
 
@@ -41,10 +44,21 @@ function loadUfo () {
     globals.loader.load(
         `models/ufo/scene.gltf`,
         function(gltf){
+
+            // calculate actual center (since the model's center is not accurate)
+            const box = new THREE.Box3().setFromObject(gltf.scene);
+            const center = box.getCenter(new THREE.Vector3());
+
+            // alter object space
+            gltf.scene.children.forEach(child => {
+                child.position.x -= center.x;
+                child.position.y -= center.y;
+                child.position.z -= center.z;
+            });
+
             gltf.scene.scale.set(3,3,3)
             //gltf.scene.position.set(-10, 80, -270)
             gltf.scene.position.set(-300, 150, -270);
-            
             globals.scene.add(gltf.scene);
             globals.models.ufo = gltf.scene;
             
@@ -208,17 +222,24 @@ function setUpMovingCars(){
 
     globals.modelClasses.movingCars.push(car1);
     globals.modelClasses.movingCars.push(car2);
-
-    console.log(globals.models.movingCars)
 }
 
-function updateMovingCars(timeSeconds){
+function updateMovingCars(deltaTime){
     globals.modelClasses.movingCars.forEach((movingCar) => {
 
         if(!movingCar.moving){
-            movingCar.startMoving(timeSeconds);
+            movingCar.startMoving(deltaTime);
         }
-        movingCar.update(timeSeconds);
+        movingCar.update(deltaTime);
 
     })
+}
+
+function setUpUFO(){
+    const ufo = new UFO(globals.models.ufo);    
+    globals.modelClasses.ufo = ufo;
+}
+
+function updateUFO(deltaTime){
+    globals.modelClasses.ufo.update(deltaTime);
 }
