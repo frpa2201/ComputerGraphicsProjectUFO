@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 import { globals } from './globals.js';
 
+export const animation = {
+    updateLogic: updateLogic
+}
+
 const clock = new THREE.Clock();
 const _vec3 = new THREE.Vector3();
 
@@ -36,11 +40,9 @@ function resetAnimation() {
     if(globals.ufoBeam.deactivate) globals.ufoBeam.deactivate();
 }
 
-function animate(time) {
-    const timeSeconds = time * 0.001;
+function updateLogic(timeSeconds){
     const deltaTime = clock.getDelta();
-    globals.composer.render();
- 
+
     updateUFOFrame(deltaTime)
     updateCarFrame(deltaTime)
 
@@ -136,5 +138,3 @@ function updateCarFrame(deltaTime) {
         }
     }
 }
-
-export { animate };

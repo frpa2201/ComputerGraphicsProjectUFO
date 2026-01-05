@@ -5,7 +5,7 @@ import { globals } from "./globals.js"
 const BEAM_SETTINGS = {
     height: 30,
     topRadius: 2,
-    botRadius: 6,
+    botRadius: 5,
     maxAngle: Math.PI / 8
 }
 
@@ -98,7 +98,7 @@ export function UFOSpotlight() {
         UFOBeam.angle = BEAM_SETTINGS.maxAngle * ease;
     };
 
-    UFOBeamGroup.position.y = 5;
+    UFOBeamGroup.position.y = 0;
 
     return UFOBeamGroup;
 }

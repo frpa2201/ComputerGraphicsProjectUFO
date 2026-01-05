@@ -8,7 +8,7 @@ import { viewing } from './viewing.js';
 import { lighting } from './lighting.js';
 import { fog } from './fog.js';
 import { postprocessing } from './postprocessing.js';
-import { animate } from './animation.js'
+import { animation } from './animation.js';
 
 const MAX_WIDTH = 854;
 const MAX_HEIGHT = 480;
@@ -37,7 +37,9 @@ function projectInit(){
 
     window.addEventListener('keydown', (e) => {
         if (e.code === 'Space') {
-            globals.state.animationTrigger = true;
+            if(globals.modelClasses.ufo != null){
+                globals.modelClasses.ufo.startAnimation();
+            }
         }
     });
 
@@ -66,7 +68,26 @@ function projectInit(){
         resizeCanvas(window.innerWidth, window.innerHeight);
     }
 
+    const clock = new THREE.Clock();
+
+    function animate(time) {
+        const timeSeconds = time * 0.001;
+        const deltaTime = clock.getDelta();
+        globals.composer.render();
+
+        //animation.updateLogic(timeSeconds);
+     
+        objects.update(deltaTime);
+
+        // displaying camera coordinates
+        const tempdiv = document.getElementById('tempdiv');
+        const cameraPos = globals.camera.position;
+        tempdiv.innerText = cameraPos.x + "\n" + cameraPos.y + "\n" + cameraPos.z + "\n";
+        
+    }
+
     globals.loader.manager.onLoad = function(){
+        objects.setUpObjects();
         renderer.setAnimationLoop( animate );
     }
 }
