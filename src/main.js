@@ -8,7 +8,7 @@ import { viewing } from './viewing.js';
 import { lighting } from './lighting.js';
 import { fog } from './fog.js';
 import { postprocessing } from './postprocessing.js';
-import { animation } from './animation.js';
+//import { animation } from './animation.js';
 
 const MAX_WIDTH = 854;
 const MAX_HEIGHT = 480;
