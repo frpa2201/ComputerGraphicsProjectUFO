@@ -77,7 +77,7 @@ export class StandingStillPath extends PathSegment {
     }
 
     getPose(localTime) {
-        // Orientation is null, meaning "keep previous rotation"
+        //orientation is null since were standing still
         return {
             x: this.pos.x,
             y: this.pos.y,
