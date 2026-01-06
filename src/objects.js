@@ -151,13 +151,18 @@ function loadMovingCars () {
 
             // --- NEW CODE ENDS HERE ---
 
-            const car1 = gltf.scene;
-            const car2 = car1.clone();
+            function cloneAndAddCars(car, carNumber){
+                let cars = [car];
+                for(let i = 0; i < carNumber-1; i++){
+                    cars.push(car.clone());
+                }
+                cars.forEach(car => {
+                    globals.scene.add(car);
+                    globals.models.movingCars.push(car);
+                });
+            }
 
-            globals.scene.add(car1);
-            globals.scene.add(car2);
-            globals.models.movingCars.push(car1);
-            globals.models.movingCars.push(car2);
+            cloneAndAddCars(gltf.scene, 4);
         },
         function(xhr){
             console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -177,51 +182,48 @@ function setUpMovingCars(){
         new THREE.Vector3(-152.1, 0.3, -80.3)
     ]
     const car1path = new CombinedPath();
-    car1path.add(new LinearPath(
-        5,
-        car1points[0],
-        car1points[1],
-        true,
-        true
-    ));
-    car1path.add(new StandingStillPath(
-        1.5,
-        car1points[1]
-    ));
-    car1path.add(new CubicBezierPath(
-        5,
-        car1points[1],
-        new THREE.Vector3(-200, 0.3, -81),
-        new THREE.Vector3(-199, 0.3, -82),
-        car1points[2],
-        true,
-        false
-    ));
-    car1path.add(new LinearPath(
-        6,
-        car1points[2],
-        car1points[3],
-        false,
-        false
-    ))
+    car1path.add(new LinearPath(5, car1points[0], car1points[1], true, true));
+    car1path.add(new StandingStillPath(1.5, car1points[1]));
+    car1path.add(new CubicBezierPath(6, car1points[1], new THREE.Vector3(-200, 0.3, -80), new THREE.Vector3(-199, 0.3, -81), car1points[2], true, false));
+    car1path.add(new LinearPath(6, car1points[2], car1points[3], false, false));
 
     const car1 = new movingCar(globals.models.movingCars[0], car1path);
+    globals.modelClasses.movingCars.push(car1);
 
 
     const car2path = new CombinedPath();
-    car2path.add(new LinearPath(
-        30,
-        new THREE.Vector3(-76.1, 0.3, -0.6),
-        new THREE.Vector3(-76.1, 0.3, -444),
-        false,
-        false
-    ));
+    car2path.add(new LinearPath(30, new THREE.Vector3(-76.1, 0.3, -0.6), new THREE.Vector3(-76.1, 0.3, -444), false, false));
 
     const car2 = new movingCar(globals.models.movingCars[1], car2path);
-
-
-    globals.modelClasses.movingCars.push(car1);
     globals.modelClasses.movingCars.push(car2);
+
+    const car3points = [
+        new THREE.Vector3(-111, 0.3, -198.8),
+        new THREE.Vector3(-92, 0.3, -198.8),
+        new THREE.Vector3(-80.7, 0.3, -190.8),
+        new THREE.Vector3(-80.7, 0.3, 160)
+    ] 
+    const car3path = new CombinedPath();
+    car3path.add(new LinearPath(5, car3points[0], car3points[1], false, true));
+    car3path.add(new StandingStillPath(1.5, car3points[1]));
+    car3path.add(new CubicBezierPath(4, car3points[1], new THREE.Vector3(-84.1, 0.3, -198.5), new THREE.Vector3(-81, 0.3, -194.5), car3points[2], true, false));
+    car3path.add(new LinearPath(30, car3points[2], car3points[3], false, false));
+    const car3 = new movingCar(globals.models.movingCars[2], car3path);
+    globals.modelClasses.movingCars.push(car3);
+
+
+    const car4points = [
+        new THREE.Vector3(-150, 0.3, -84.0),
+        new THREE.Vector3(-188, 0.3, -84.0),
+        new THREE.Vector3(-304.9, 0.3, -84.0)
+    ]
+    const car4path = new CombinedPath();
+    car4path.add(new LinearPath(5, car4points[0], car4points[1], false, true));
+    car4path.add(new StandingStillPath(1.5, car4points[1]));
+    car4path.add(new LinearPath(16, car4points[1], car4points[2], true, false));
+    const car4 = new movingCar(globals.models.movingCars[3], car4path);
+    globals.modelClasses.movingCars.push(car4);
+
 }
 
 function updateMovingCars(deltaTime){
