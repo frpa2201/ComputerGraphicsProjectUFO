@@ -21,6 +21,15 @@ export const lighting = {
     }
 }
 
+//List and function to store and toggle window lights from button in main
+let allWindowLights = [];
+
+export function toggleWindowLights() {
+    allWindowLights.forEach(light => {
+        light.visible = !light.visible;
+    });
+}
+
 export function windowLights() {
     //Building 1
     const positionsB1 = [
@@ -38,6 +47,7 @@ export function windowLights() {
         light.lookAt(-500, pos.y, pos.z);
         
         globals.scene.add(light);
+        allWindowLights.push(light);
     })
 
     const positionsB2 = [
@@ -54,6 +64,7 @@ export function windowLights() {
         light.lookAt(pos.x, pos.y, 500);
         
         globals.scene.add(light);
+        allWindowLights.push(light);
     })
 
     const positionsB3 = [
@@ -70,6 +81,7 @@ export function windowLights() {
         light.lookAt(pos.x, pos.y, 500);
         
         globals.scene.add(light);
+        allWindowLights.push(light);
     })
 }
 

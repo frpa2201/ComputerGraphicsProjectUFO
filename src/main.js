@@ -5,7 +5,7 @@ import { globals } from './globals.js';
 import { objects } from './objects.js';
 import { rendering } from './renderer.js';
 import { viewing } from './viewing.js';
-import { lighting,windowLights } from './lighting.js';
+import { lighting,windowLights,toggleWindowLights } from './lighting.js';
 import { fog } from './fog.js';
 import { postprocessing } from './postprocessing.js';
 
@@ -36,52 +36,61 @@ function projectInit(){
     postprocessing.setUpPostProcessing();
 
     //AI help to create a nice button
-    const ufoBtn = document.createElement('button');
-    ufoBtn.innerText = "SEND IN UFO";
+    function createStyledButton(text, leftOffset) {
+        const btn = document.createElement('button');
+        btn.innerText = text;
+        
+        btn.style.position = 'absolute';
+        btn.style.bottom = '30px';
+        btn.style.left = leftOffset; // Dynamic position
+        btn.style.zIndex = '1000';
+        
+        //Styling
+        btn.style.padding = '14px 28px';
+        btn.style.fontFamily = '"Segoe UI", Helvetica, Arial, sans-serif';
+        btn.style.fontWeight = 'bold';
+        btn.style.fontSize = '14px';
+        btn.style.letterSpacing = '1px';
+        btn.style.color = '#ffffff';
+        btn.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        btn.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+        btn.style.borderRadius = '30px';
+        btn.style.cursor = 'pointer';
+        btn.style.backdropFilter = 'blur(4px)';
+        btn.style.transition = 'all 0.3s ease';
 
-    //Positioning
-    ufoBtn.style.position = 'absolute';
-    ufoBtn.style.bottom = '30px';   // Changed from top to bottom
-    ufoBtn.style.left = '30px';
-    ufoBtn.style.zIndex = '1000';
+        //Hover Effects
+        btn.onmouseenter = () => {
+            btn.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            btn.style.color = '#000000';
+            btn.style.transform = 'scale(1.05)';
+        };
+        btn.onmouseleave = () => {
+            btn.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+            btn.style.color = '#ffffff';
+            btn.style.transform = 'scale(1)';
+        };
 
-    //Styling
-    ufoBtn.style.padding = '14px 28px';
-    ufoBtn.style.fontFamily = '"Segoe UI", Helvetica, Arial, sans-serif';
-    ufoBtn.style.fontWeight = 'bold';
-    ufoBtn.style.fontSize = '14px';
-    ufoBtn.style.letterSpacing = '1px';
-    ufoBtn.style.color = '#ffffff';
-    ufoBtn.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'; // Semi-transparent black
-    ufoBtn.style.border = '1px solid rgba(255, 255, 255, 0.3)';
-    ufoBtn.style.borderRadius = '30px'; // Rounded pill shape
-    ufoBtn.style.cursor = 'pointer';
-    ufoBtn.style.backdropFilter = 'blur(4px)'; // Blurs the 3D scene behind the button
-    ufoBtn.style.transition = 'all 0.3s ease'; // Smooth animation for hover
+        document.body.appendChild(btn);
+        return btn;
+    }
 
-    //Hover Effects
-    ufoBtn.onmouseenter = () => {
-        ufoBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-        ufoBtn.style.color = '#000000';
-        ufoBtn.style.transform = 'scale(1.05)';
-    };
-    ufoBtn.onmouseleave = () => {
-        ufoBtn.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-        ufoBtn.style.color = '#ffffff';
-        ufoBtn.style.transform = 'scale(1)';
-    };
-
-    document.body.appendChild(ufoBtn);
-
-    //Click Action
+    //UFO Button 
+    const ufoBtn = createStyledButton("SEND IN UFO", "30px");
+    
     ufoBtn.addEventListener('click', () => {
         if(globals.modelClasses.ufo != null){
             globals.modelClasses.ufo.startAnimation();
-            
-            // Visual feedback on click
             ufoBtn.innerText = "DISPATCHED!";
             setTimeout(() => { ufoBtn.innerText = "SEND IN UFO"; }, 2000);
         }
+    });
+
+    //Lights Button 
+    const lightBtn = createStyledButton("TOGGLE LIGHTS", "200px");
+
+    lightBtn.addEventListener('click', () => {
+        toggleWindowLights();
     });
 
     document.onmousemove = (e) => {
