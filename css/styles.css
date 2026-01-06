@@ -24,6 +24,7 @@ header h1 {
 }
 
 #tempdiv{
+  display: none;
   position: absolute;
   width: 200px;
   height: 130px;

@@ -16,7 +16,6 @@ const UFO_PROPERTIES = {
 const CAR_PROPERTIES = {
     startingAbductionSpeed: 0.2, 
     abductionSpeed: 0.2,
-    acceleration: 0.01, 
     rotationSpeed: { x: 1, y: 0.5, z: 2.5 },
     heightLimit: 80
 }
@@ -44,6 +43,8 @@ export class UFO {
         this.beamActive = false; 
         globals.models.cars.position.set(-176, 0, -187)
         globals.models.cars.visible = true;
+        globals.models.cars.rotation.setFromVector3(new THREE.Vector3(0,0,0));
+        CAR_PROPERTIES.abductionSpeed = 0.2;
     }
 
     // 2. The main update loop acts as a router
@@ -145,7 +146,6 @@ export class UFO {
             car.rotation.x += CAR_PROPERTIES.rotationSpeed.x * deltaTime;
             car.rotation.y += CAR_PROPERTIES.rotationSpeed.y * deltaTime;
             car.rotation.z += CAR_PROPERTIES.rotationSpeed.z * deltaTime;
-            console.log("he")
         }
         else {
             car.visible = false;
