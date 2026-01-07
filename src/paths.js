@@ -1,29 +1,24 @@
 import * as THREE from 'three';
 
-// --- Utility: Easing Functions ---
-// Smooths the normalized time t (0 to 1) based on flags
 function easingHelper(t, smoothStart, smoothEnd) {
-    // Clamp t between 0 and 1 to be safe
+    // clamp 
     t = Math.max(0, Math.min(1, t));
 
     if (smoothStart && smoothEnd) {
-        // Ease In Out: 3t^2 - 2t^3
+        // ease In Out: 3t^2 - 2t^3
         return t * t * (3 - 2 * t);
     } else if (smoothStart) {
-        // Ease In: t^2
+        // ease In: t^2
         return t * t;
     } else if (smoothEnd) {
-        // Ease Out: 1 - (1-t)^2
+        // ease Out: 1 - (1-t)^2
         return 1 - (1 - t) * (1 - t);
     }
-    // Linear
+
     return t;
 }
 
-/**
- * Base class (conceptual) for all path types.
- * Returns a pose object: { x, y, z, quaternion }
- */
+// base class
 class PathSegment {
     constructor(duration) {
         this.duration = duration;
@@ -42,30 +37,28 @@ export class LinearPath extends PathSegment {
         this.smoothStart = smoothStart;
         this.smoothEnd = smoothEnd;
 
-        // Pre-calculate orientation since a straight line has constant rotation
+        // calculate orientation since a straight line has constant rotation
         this.quaternion = new THREE.Quaternion();
         if (!startPos.equals(endPos)) {
             const lookMatrix = new THREE.Matrix4();
-            // Look from start to end. Up vector is arbitrary (Y-up), 
-            // you might need to adjust based on your specific model's forward axis.
             lookMatrix.lookAt(startPos, endPos, new THREE.Vector3(0, 1, 0));
             this.quaternion.setFromRotationMatrix(lookMatrix);
         }
     }
 
     getPose(localTime) {
-        // Normalize time (0.0 to 1.0)
+        // normalize 
         const rawT = localTime / this.duration;
         const t = easingHelper(rawT, this.smoothStart, this.smoothEnd);
 
-        // Interpolate Position
+        // interpolate
         const currentPos = new THREE.Vector3().lerpVectors(this.startPos, this.endPos, t);
 
         return {
             x: currentPos.x,
             y: currentPos.y,
             z: currentPos.z,
-            quaternion: this.quaternion // Constant rotation for a line
+            quaternion: this.quaternion // constant rotation for a line
         };
     }
 }
@@ -77,7 +70,7 @@ export class StandingStillPath extends PathSegment {
     }
 
     getPose(localTime) {
-        //orientation is null since were standing still
+       
         return {
             x: this.pos.x,
             y: this.pos.y,
@@ -101,7 +94,6 @@ export class CubicBezierPath extends PathSegment {
     }
 
     getPose(localTime) {
-        // Normalize time (0.0 to 1.0)
         const rawT = localTime / this.duration;
         const t = easingHelper(rawT, this.smoothStart, this.smoothEnd);
 
@@ -146,21 +138,20 @@ export class CombinedPath {
     }
 
     getPose(timeSeconds) {
-        // 1. Handle Boundaries
+        // no paths
         if (this.segments.length === 0) return { x: 0, y: 0, z: 0, quaternion: null };
 
-        // Before start: return start of first path
+        // if before start
         if (timeSeconds <= 0) {
             return this.segments[0].path.getPose(0);
         }
-        // After end: return end of last path
+        // if after end
         if (timeSeconds >= this.totalDuration) {
             const lastSeg = this.segments[this.segments.length - 1];
             return lastSeg.path.getPose(lastSeg.path.duration);
         }
 
-        // 2. Find active segment
-        // (Simple iteration is fine for small N, binary search for very large N)
+        // find active segment
         const activeSegment = this.segments.find(
             seg => timeSeconds >= seg.startTime && timeSeconds < seg.endTime
         );

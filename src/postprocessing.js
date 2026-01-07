@@ -19,8 +19,8 @@ export const postprocessing = {
 
 function setUpFilmGrain(){
         const filmPass = new FilmPass(
-            0.25,   // Noise intensity (0.0 to 1.0)
-            false   // Grayscale (false to keep color)
+            0.25,   
+            false   
         );
 
         globals.composer.addPass(filmPass);

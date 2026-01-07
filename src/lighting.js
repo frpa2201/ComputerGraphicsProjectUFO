@@ -130,17 +130,15 @@ export function UFOSpotlight() {
     let beamProgress = 0;
     let isOpen = false;
 
-    // Attach custom methods to the group
-    // (If your editor underlines these in red, you can ignore it in JavaScript)
+    // custom methods
     UFOBeamGroup.activate = () => { isOpen = true; };
     UFOBeamGroup.deactivate = () => { isOpen = false; };
     UFOBeamGroup.isFullyClosed = () => {
     return beamProgress <= 0;
 };
 
-    // The animation loop function
     UFOBeamGroup.update = (deltaTime) => {
-        //Speed of the beam appearing
+        // beam appearing speed
         const speed = 0.7;
 
         if (isOpen) {
@@ -149,16 +147,14 @@ export function UFOSpotlight() {
             beamProgress -= deltaTime * speed;
         }
 
-        // Clamp between 0 and 1
+        // clamp
         beamProgress = Math.max(0, Math.min(1, beamProgress));
 
-        // Smooth easing
+        // easing
         const ease = 1 - Math.pow(1 - beamProgress, 3);
 
-        // Animate the Mesh width
         UFOBeamMesh.scale.set(ease, 1, ease);
 
-        // Animate the Light angle
         UFOBeam.angle = BEAM_SETTINGS.maxAngle * ease;
     };
 

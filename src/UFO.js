@@ -4,13 +4,13 @@ import { CombinedPath, LinearPath, StandingStillPath } from './paths.js';
 
 const UFO_PROPERTIES = {
     start: new THREE.Vector3(60, 120, -100), 
-    hover: new THREE.Vector3(-176, 80, -187),   // The stopping point (above car)
-    end:   new THREE.Vector3(-350, 300, -130),  // Exits high and right
+    hover: new THREE.Vector3(-176, 80, -187),   // the stopping point 
+    end:   new THREE.Vector3(-350, 300, -130),  
     spinningSpeed: 0.13,
     approachTime: 8,
     hoveringTime: 12,
     leavingTime: 5,
-    speed: 60 // Units per second
+    speed: 60 
 }
 
 const CAR_PROPERTIES = {
@@ -19,7 +19,7 @@ const CAR_PROPERTIES = {
     rotationSpeed: { x: 1, y: 0.5, z: 2.5 },
     heightLimit: 80
 }
-// 1. Define distinct states
+
 const STATE = {
     IDLE: 0,
     APPROACHING: 1,
@@ -47,9 +47,9 @@ export class UFO {
         CAR_PROPERTIES.abductionSpeed = 0.2;
     }
 
-    // 2. The main update loop acts as a router
+
     update(deltaTime) {
-        // Accumulate time for the current state
+        // accumulate time for current state
         this.stateTimer += deltaTime;
         this.model.rotateY(deltaTime * UFO_PROPERTIES.spinningSpeed * 2 * Math.PI);
         
@@ -67,19 +67,17 @@ export class UFO {
         }
     }
 
-    // 3. Helper to switch states cleanly
+    // helper to switch state
     setState(newState) {
         this.currentState = newState;
-        this.stateTimer = 0; // Reset timer for the new state
+        this.stateTimer = 0; 
         
-        // Optional: specific setup for entering a state
         if (newState === STATE.LEAVING) {
-             this.beamActive = false; // Safety cleanup
+             this.beamActive = false; 
              globals.ufoBeam.deactivate();
         }
     }
 
-    // --- State Handlers ---
 
     handleApproaching() {
         const pose = this.approachPath.getPose(this.stateTimer);
@@ -94,9 +92,9 @@ export class UFO {
         const pose = this.hoveringPath.getPose(this.stateTimer);
         this.model.position.set(pose.x, pose.y, pose.z);
 
-        // 0s to 3s: Wait
-        // 2s to 5s: Beam On
-        // 5s+: Beam Off and waiting to leave
+        // 0s to 3s: wait
+        // 3s to 9.5s: beam
+        // 9.5s+: beam off 
 
         if (this.stateTimer > 3.0 && this.stateTimer < 9.5) {
             if (!this.beamActive) {
@@ -111,7 +109,7 @@ export class UFO {
         }
         globals.ufoBeam.update(deltaTime);
         
-        // Transition to next state
+        // next state
         if (this.stateTimer >= this.hoveringPath.duration) {
             this.setState(STATE.LEAVING);
         }
