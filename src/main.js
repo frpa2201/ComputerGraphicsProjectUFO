@@ -35,48 +35,9 @@ function projectInit(){
 
     postprocessing.setUpPostProcessing();
 
-    //AI help to create a nice button
-    function createStyledButton(text, leftOffset) {
-        const btn = document.createElement('button');
-        btn.innerText = text;
-        
-        btn.style.position = 'absolute';
-        btn.style.bottom = '30px';
-        btn.style.left = leftOffset; // Dynamic position
-        btn.style.zIndex = '1000';
-        
-        //Styling
-        btn.style.padding = '14px 28px';
-        btn.style.fontFamily = '"Segoe UI", Helvetica, Arial, sans-serif';
-        btn.style.fontWeight = 'bold';
-        btn.style.fontSize = '14px';
-        btn.style.letterSpacing = '1px';
-        btn.style.color = '#ffffff';
-        btn.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-        btn.style.border = '1px solid rgba(255, 255, 255, 0.3)';
-        btn.style.borderRadius = '30px';
-        btn.style.cursor = 'pointer';
-        btn.style.backdropFilter = 'blur(4px)';
-        btn.style.transition = 'all 0.3s ease';
-
-        //Hover Effects
-        btn.onmouseenter = () => {
-            btn.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-            btn.style.color = '#000000';
-            btn.style.transform = 'scale(1.05)';
-        };
-        btn.onmouseleave = () => {
-            btn.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-            btn.style.color = '#ffffff';
-            btn.style.transform = 'scale(1)';
-        };
-
-        document.body.appendChild(btn);
-        return btn;
-    }
-
-    //UFO Button 
-    const ufoBtn = createStyledButton("SEND IN UFO", "30px");
+    // Select the existing buttons from the DOM
+    const ufoBtn = document.getElementById('ufo-btn');
+    const lightBtn = document.getElementById('light-btn');
     
     ufoBtn.addEventListener('click', () => {
         if(globals.modelClasses.ufo != null){
@@ -85,9 +46,6 @@ function projectInit(){
             setTimeout(() => { ufoBtn.innerText = "SEND IN UFO"; }, 2000);
         }
     });
-
-    //Lights Button 
-    const lightBtn = createStyledButton("TOGGLE LIGHTS", "200px");
 
     lightBtn.addEventListener('click', () => {
         toggleWindowLights();

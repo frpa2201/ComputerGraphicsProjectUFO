@@ -12,5 +12,6 @@ export const viewing = {
         globals.controls = new OrbitControls(globals.camera, globals.renderer.domElement);
         globals.controls.target.set(-135, 30, -141)
         globals.controls.update();
+        globals.controls.dispose();  // since the user should not actually be able to move the camera.
     }
 }
